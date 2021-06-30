@@ -11,7 +11,7 @@ config_version=4
 [application]
 
 config/name="pousse_pousse_nain"
-config/icon="res://icon.png"
+run/main_scene="res://scenes/Scene_prototype.tscn"
 
 [physics]
 
