@@ -6,7 +6,7 @@ var maxX = 25
 var maxY = 15
 
 var Noeud = {
-	"tri": Array([0, 0, 0, 0, 0, 0]),
+	"tri": Array(),
 	"pos": Vector2()
 }
 
@@ -21,14 +21,16 @@ func _unhandled_input(event):
 			if dist < minDist:
 				minDist = dist
 				index = i
-		#get_child(maxX * maxY * 2 + maxY * 2).position = nodes[index].pos # le pion est ajouté après les points
-		get_child(nodes[index].tri[0]).visible = false
+		get_child(maxX * maxY * 2 + maxY * 2).position = nodes[index].pos # le pion est ajouté après les points
+		#get_child(nodes[index].tri[4]).visible = false
+		
 
 func _init():
 	for i in range(0, maxX * maxY):
 		var p = Noeud.duplicate()
 		p.pos.x = (i % maxX) * 64 + ((int(i / maxX) % 2) * 32) + 100
 		p.pos.y = int(i / maxX) * 55 + 100
+		p.tri = [0, 0, 0, 0, 0, 0]
 		nodes.append(p)
 	
 	for i in range(0, (maxX + 1) * maxY):
@@ -45,8 +47,14 @@ func _init():
 		meshI.mesh = tempM
 		triangles.append(meshI)
 		add_child(meshI)
-		if (not (i % (maxX + 1) == 0) or i == 0):
-			nodes[i - int(i / maxX)].tri[0] = i
+		if not (i % (maxX + 1) == maxX):
+			nodes[i - int(i / (maxX + 1))].tri[0] = i
+			#print_debug(i - int(i / maxX))
+		if not (i % (maxX + 1) == 0):
+			nodes[i - int(i / (maxX + 1)) - 1].tri[4] = i
+		if (not (i % (maxX + 1) == 0)) and (int(i / (maxX + 1)) % 2 == 0):
+			nodes[i - int(i / (maxX + 1)) - 1].tri[4] = i
+			pass
 	
 	for i in range(0, (maxX + 1) * maxY):
 		var st = SurfaceTool.new()
