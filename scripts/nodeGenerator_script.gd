@@ -1,20 +1,24 @@
 extends Node2D
 
 var nodes = Array()            #tableau des noeuds de notre plateau
-var maxX = 24                  #nb de noeuds en X
-var maxY = 13                  #nb de noeuds en Y
+var maxX = 50                  #nb de noeuds en X
+var maxY = 30                  #nb de noeuds en Y
 
-var stepX = 64                 #modifier pour changer la taille en pixels du plateau, mettre des valeurs paires
+var stepX = 32                 #modifier pour changer la taille en pixels du plateau, mettre des valeurs paires
 var stepY = int(stepX * 0.866) #ne pas modifier, 0.866 est le ratio pour un triangle equilateral
 
 var padding = 100              #définit l'espace entre le plateau et le bord
-var lineWidth = 4              #définit la largeur des lignes entre les triangles, mettre des valeurs paires
+var lineWidth = 2              #définit la largeur des lignes entre les triangles, mettre des valeurs paires
 
 #modèle pour un noeud
 var Noeud = {
 	"tri": Array(),            #tableau des indices des triangles, permet de faciliter le changement de couleur
 	"pos": Vector2()           #position du noeud
 }
+
+#couleurs disponibles pour les triangles
+var mat1 = load("res://materials/default_triangle_material.tres")
+var mat2 = load("res://materials/selected_triangle_material.tres")
 
 #fonctions de génération
 #remplit le tableau de noeuds avec la bonne position
@@ -48,6 +52,7 @@ func genererTriangles():
 		#ajout du polygone à une mesh instance (comporte d'autres attributs comme la couleur)
 		var meshI = MeshInstance2D.new()
 		meshI.mesh = tempM
+		meshI.material = mat1
 		#ajout de la mesh instance à notre scène de jeu
 		add_child(meshI)
 		
@@ -72,14 +77,15 @@ func genererTriangles():
 		var st = SurfaceTool.new()
 		st.begin(Mesh.PRIMITIVE_TRIANGLES)
 		var tempM = Mesh.new()
-		var px = (i % (maxX + 1)) * 64 + ((int(i / (maxX + 1)) % 2) * 32) + 36
-		var py = int(i / (maxX + 1)) * 55 + 100
-		st.add_vertex(Vector3(px + 4, py - 2, 0))
-		st.add_vertex(Vector3(px + 60, py - 2, 0))
-		st.add_vertex(Vector3(px + 32, py - 51, 0))
+		var px = (i % (maxX + 1)) * stepX + ((int(i / (maxX + 1)) % 2) * int(stepX / 2)) + (padding - stepX)
+		var py = int(i / (maxX + 1)) * stepY + padding
+		st.add_vertex(Vector3(px + lineWidth, py - int(lineWidth / 2), 0))
+		st.add_vertex(Vector3(px + stepX - lineWidth, py - int(lineWidth / 2), 0))
+		st.add_vertex(Vector3(px + int(stepX / 2), py - (stepY - lineWidth), 0))
 		st.commit(tempM)
 		var meshI = MeshInstance2D.new()
 		meshI.mesh = tempM
+		meshI.material = mat1
 		add_child(meshI)
 		
 		var x = i % (maxX + 1)
@@ -101,14 +107,15 @@ func genererTriangles():
 		var st = SurfaceTool.new()
 		st.begin(Mesh.PRIMITIVE_TRIANGLES)
 		var tempM = Mesh.new()
-		var px = (i % maxX) * 64 + 100
-		var py = 100
-		st.add_vertex(Vector3(px, py - 4, 0))
-		st.add_vertex(Vector3(px - 27, py - 51, 0))
-		st.add_vertex(Vector3(px + 27, py - 51, 0))
+		var px = (i % maxX) * stepX + padding
+		var py = padding
+		st.add_vertex(Vector3(px, py - lineWidth, 0))
+		st.add_vertex(Vector3(px - (int(stepX / 2) - lineWidth - 1), py - (stepY - lineWidth), 0))
+		st.add_vertex(Vector3(px + (int(stepX / 2) - lineWidth - 1), py - (stepY - lineWidth), 0))
 		st.commit(tempM)
 		var meshI = MeshInstance2D.new()
 		meshI.mesh = tempM
+		meshI.material = mat1
 		add_child(meshI)
 		
 		var index = i + (maxX + 1) * maxY * 2
@@ -119,14 +126,15 @@ func genererTriangles():
 		var st = SurfaceTool.new()
 		st.begin(Mesh.PRIMITIVE_TRIANGLES)
 		var tempM = Mesh.new()
-		var px = (i % maxX) * 64 + 100 + (((maxY + 1) % 2) * 32)
-		var py = 100 + (maxY - 1) * 55
-		st.add_vertex(Vector3(px, py + 4, 0))
-		st.add_vertex(Vector3(px - 27, py + 51, 0))
-		st.add_vertex(Vector3(px + 27, py + 51, 0))
+		var px = (i % maxX) * stepX + padding + (((maxY + 1) % 2) * int(stepX / 2))
+		var py = padding + (maxY - 1) * stepY
+		st.add_vertex(Vector3(px, py + lineWidth, 0))
+		st.add_vertex(Vector3(px - (int(stepX / 2) - lineWidth - 1), py + stepY - lineWidth, 0))
+		st.add_vertex(Vector3(px + (int(stepX / 2) - lineWidth - 1), py + stepY - lineWidth, 0))
 		st.commit(tempM)
 		var meshI = MeshInstance2D.new()
 		meshI.mesh = tempM
+		meshI.material = mat1
 		add_child(meshI)
 		
 		var index = i + (maxX + 1) * maxY * 2 + maxX
@@ -152,22 +160,22 @@ func _unhandled_input(event):
 				index = i
 		get_child((maxX + 1) * maxY * 2 + maxX * 2).position = nodes[index].pos # le pion est ajouté après les points
 		pass
-		get_child(nodes[index].tri[0]).visible = false #permet d'accéder à un triangle
-		get_child(nodes[index].tri[1]).visible = false
-		get_child(nodes[index].tri[2]).visible = false
-		get_child(nodes[index].tri[3]).visible = false
-		get_child(nodes[index].tri[4]).visible = false
-		get_child(nodes[index].tri[5]).visible = false
+		get_child(nodes[index].tri[0]).material = mat2 #permet d'accéder à un triangle
+		get_child(nodes[index].tri[1]).material = mat2
+		get_child(nodes[index].tri[2]).material = mat2
+		get_child(nodes[index].tri[3]).material = mat2
+		get_child(nodes[index].tri[4]).material = mat2
+		get_child(nodes[index].tri[5]).material = mat2
 	
 	#click droit, fait réapparaitre tous les triangles (débeuggage)
 	if event is InputEventMouseButton and event.is_pressed() and event.button_index == BUTTON_RIGHT:
 		for i in range(0, maxX * maxY):
-			get_child(nodes[i].tri[0]).visible = true
-			get_child(nodes[i].tri[1]).visible = true
-			get_child(nodes[i].tri[2]).visible = true
-			get_child(nodes[i].tri[3]).visible = true
-			get_child(nodes[i].tri[4]).visible = true
-			get_child(nodes[i].tri[5]).visible = true
+			get_child(nodes[i].tri[0]).material = mat1
+			get_child(nodes[i].tri[1]).material = mat1
+			get_child(nodes[i].tri[2]).material = mat1
+			get_child(nodes[i].tri[3]).material = mat1
+			get_child(nodes[i].tri[4]).material = mat1
+			get_child(nodes[i].tri[5]).material = mat1
 
 #fonction appelée lors du la création du noeud
 func _init():
