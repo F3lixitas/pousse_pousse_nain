@@ -11,6 +11,6 @@ script = ExtResource( 3 )
 
 [node name="pion_1" type="Sprite" parent="nodeGenerator"]
 position = Vector2( 101, 99 )
-scale = Vector2( 0.5, 0.5 )
+scale = Vector2( 0.45, 0.45 )
 texture = ExtResource( 1 )
 script = ExtResource( 2 )
