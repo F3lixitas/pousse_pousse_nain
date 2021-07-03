@@ -3,7 +3,7 @@ Un jeu adapté du jeux de société éponyme
 
 Lien vers la documentation Godot : https://docs.godotengine.org/en/stable/classes/class_%40gdscript.html
 
-Génération du plateau :
+## Génération du plateau :
 - génération des noeuds et de leur position.
 - génération des triangles du plateau en 4 étapes : en bas à gauche (0), en hau à droite (1), exception de la ligne du haut et exception de la ligne du bas
 
