@@ -10,15 +10,19 @@ var stepY = int(stepX * 0.866) #ne pas modifier, 0.866 est le ratio pour un tria
 var padding = 100              #définit l'espace entre le plateau et le bord
 var lineWidth = 2              #définit la largeur des lignes entre les triangles, mettre des valeurs paires
 
+var maxDist = 500
+
 #modèle pour un noeud
 var Noeud = {
 	"tri": Array(),            #tableau des indices des triangles, permet de faciliter le changement de couleur
-	"pos": Vector2()           #position du noeud
+	"pos": Vector2(),          #position du noeud
+	"selected": bool()
 }
 
 #couleurs disponibles pour les triangles
-var mat1 = load("res://materials/default_triangle_material.tres")
-var mat2 = load("res://materials/selected_triangle_material.tres")
+var mat1 = load("res://materials/default_triangle_material.tres")            #par defaut, blanc
+var mat2 = load("res://materials/selected_triangle_material.tres")           #selectionné, bleu
+var mat3 = load("res://materials/default_overlayed_triangle_material.tres")  #sous la souris, gris
 
 #fonctions de génération
 #remplit le tableau de noeuds avec la bonne position
@@ -28,6 +32,7 @@ func genererNoeuds():
 		p.pos.x = (i % maxX) * stepX + ((int(i / maxX) % 2) * int(stepX / 2)) + padding
 		p.pos.y = int(i / maxX) * stepY + padding
 		p.tri = [0, 0, 0, 0, 0, 0] #initialisation après instanciation car sinon il y a conflit d'adresses
+		p.selected = false
 		nodes.append(p)
 
 #fonction qui génère les triangles du plateau ainsi que ses attributs
@@ -158,14 +163,19 @@ func _unhandled_input(event):
 			if dist < minDist:
 				minDist = dist
 				index = i
-		get_child((maxX + 1) * maxY * 2 + maxX * 2).position = nodes[index].pos # le pion est ajouté après les points
-		pass
-		get_child(nodes[index].tri[0]).material = mat2 #permet d'accéder à un triangle
-		get_child(nodes[index].tri[1]).material = mat2
-		get_child(nodes[index].tri[2]).material = mat2
-		get_child(nodes[index].tri[3]).material = mat2
-		get_child(nodes[index].tri[4]).material = mat2
-		get_child(nodes[index].tri[5]).material = mat2
+		if get_child((maxX + 1) * maxY * 2 + maxX * 2).position == nodes[index].pos: # le pion est ajouté après les points
+			for i in range(0, maxX * maxY):
+				if nodes[index].pos.distance_to(nodes[i].pos) < maxDist:
+					get_child(nodes[i].tri[0]).material = mat2 #permet d'accéder à un triangle
+					get_child(nodes[i].tri[1]).material = mat2
+					get_child(nodes[i].tri[2]).material = mat2
+					get_child(nodes[i].tri[3]).material = mat2
+					get_child(nodes[i].tri[4]).material = mat2
+					get_child(nodes[i].tri[5]).material = mat2
+					nodes[i].selected = true
+			
+		
+		
 	
 	#click droit, fait réapparaitre tous les triangles (débeuggage)
 	if event is InputEventMouseButton and event.is_pressed() and event.button_index == BUTTON_RIGHT:
@@ -176,6 +186,20 @@ func _unhandled_input(event):
 			get_child(nodes[i].tri[3]).material = mat1
 			get_child(nodes[i].tri[4]).material = mat1
 			get_child(nodes[i].tri[5]).material = mat1
+
+func _process(delta):
+	var cursorPos = get_viewport().get_mouse_position()
+	var minDist = 10000
+	var dist
+	var index = 0
+	#calcule l'indice du noeud le plus proche de la souris
+	for i in range(0, maxX * maxY):
+		dist = cursorPos.distance_to(nodes[i].pos)
+		if dist < minDist:
+			minDist = dist
+			index = i
+	pass
+
 
 #fonction appelée lors du la création du noeud
 func _init():
