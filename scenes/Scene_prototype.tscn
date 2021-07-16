@@ -6,10 +6,10 @@
 
 [node name="Scene_prototype" type="Node2D"]
 
-[node name="nodeGenerator" type="Node2D" parent="."]
+[node name="pointGenerator" type="Node2D" parent="."]
 script = ExtResource( 3 )
 
-[node name="pion_1" type="Sprite" parent="nodeGenerator"]
+[node name="pion_1" type="Sprite" parent="pointGenerator"]
 position = Vector2( 100, 100 )
 scale = Vector2( 0.2, 0.2 )
 texture = ExtResource( 1 )
