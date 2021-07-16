@@ -6,8 +6,8 @@ extends Node
 # la position du point grace à son indice.                      #
 #################################################################
 
-func getPointIndex(maxX, maxY, stepX, stepY, padding, cursorPosition):
+static func getPointIndex(maxX, maxY, stepX, stepY, padding, cursorPosition):
 	return 0
 
-func getPointPosition(maxX, maxY, stepX, stepY, padding, index):
+static func getPointPosition(maxX, maxY, stepX, stepY, padding, index):
 	return 0
