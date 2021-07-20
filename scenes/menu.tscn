@@ -1,0 +1,54 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://scripts/Menu_Button1_script.gd" type="Script" id=1]
+[ext_resource path="res://scripts/Menu_Button3_script.gd" type="Script" id=2]
+
+[node name="menu" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button" type="Button" parent="."]
+anchor_left = 0.099
+anchor_top = 0.107
+anchor_right = 0.435
+anchor_bottom = 0.215
+margin_left = -0.376007
+margin_top = -0.200005
+margin_right = -0.440033
+action_mode = 0
+text = "Launch game"
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button2" type="Button" parent="."]
+anchor_left = 0.099
+anchor_top = 0.302
+anchor_right = 0.435
+anchor_bottom = 0.411
+margin_left = -0.376007
+margin_top = 0.179749
+margin_right = -0.440033
+margin_bottom = -0.220245
+action_mode = 0
+text = "Options"
+
+[node name="Button3" type="Button" parent="."]
+anchor_left = 0.099
+anchor_top = 0.506
+anchor_right = 0.435
+anchor_bottom = 0.614
+margin_left = -0.376007
+margin_top = -0.220276
+margin_right = -0.440033
+margin_bottom = -0.0202637
+action_mode = 0
+text = "Quit"
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
