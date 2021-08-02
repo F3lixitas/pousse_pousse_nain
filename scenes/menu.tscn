@@ -1,0 +1,126 @@
+[gd_scene load_steps=18 format=2]
+
+[ext_resource path="res://scripts/menu/Menu_Button1_script.gd" type="Script" id=1]
+[ext_resource path="res://scripts/menu/Menu_Button3_script.gd" type="Script" id=2]
+[ext_resource path="res://scripts/menu/Menu_Button2_script.gd" type="Script" id=3]
+[ext_resource path="res://font/Berry Rotunda.ttf" type="DynamicFontData" id=4]
+
+[sub_resource type="StyleBoxFlat" id=1]
+bg_color = Color( 0.470588, 0.470588, 0.470588, 1 )
+
+[sub_resource type="StyleBoxFlat" id=2]
+bg_color = Color( 0.784314, 0.784314, 0.784314, 1 )
+
+[sub_resource type="StyleBoxFlat" id=3]
+bg_color = Color( 0.0784314, 0.0588235, 0.0588235, 1 )
+
+[sub_resource type="DynamicFont" id=4]
+size = 40
+extra_spacing_top = 10
+font_data = ExtResource( 4 )
+
+[sub_resource type="StyleBoxFlat" id=5]
+bg_color = Color( 0.470588, 0.470588, 0.470588, 1 )
+
+[sub_resource type="StyleBoxFlat" id=6]
+bg_color = Color( 0.784314, 0.784314, 0.784314, 1 )
+
+[sub_resource type="StyleBoxFlat" id=7]
+bg_color = Color( 0.0784314, 0.0588235, 0.0588235, 1 )
+
+[sub_resource type="DynamicFont" id=8]
+size = 40
+extra_spacing_top = 10
+font_data = ExtResource( 4 )
+
+[sub_resource type="StyleBoxFlat" id=9]
+bg_color = Color( 0.470588, 0.470588, 0.470588, 1 )
+
+[sub_resource type="StyleBoxFlat" id=10]
+bg_color = Color( 0.784314, 0.784314, 0.784314, 1 )
+
+[sub_resource type="StyleBoxFlat" id=11]
+bg_color = Color( 0.0784314, 0.0588235, 0.0588235, 1 )
+
+[sub_resource type="DynamicFontData" id=12]
+font_path = "res://font/Berry Rotunda.ttf"
+
+[sub_resource type="DynamicFont" id=13]
+size = 40
+extra_spacing_top = 10
+font_data = SubResource( 12 )
+
+[node name="menu" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="options" type="Control" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button" type="Button" parent="."]
+anchor_left = 0.103
+anchor_top = 0.093
+anchor_right = 0.364
+anchor_bottom = 0.185
+margin_left = 0.741989
+margin_top = -0.440002
+margin_right = -0.378113
+margin_bottom = 0.199997
+custom_styles/hover = SubResource( 1 )
+custom_styles/pressed = SubResource( 2 )
+custom_styles/normal = SubResource( 3 )
+custom_fonts/font = SubResource( 4 )
+action_mode = 0
+text = "Launch game"
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button2" type="Button" parent="."]
+anchor_left = 0.104
+anchor_top = 0.278
+anchor_right = 0.365
+anchor_bottom = 0.37
+margin_left = 0.319992
+margin_top = -0.240021
+margin_right = -0.800049
+margin_bottom = 0.399994
+custom_styles/hover = SubResource( 5 )
+custom_styles/pressed = SubResource( 6 )
+custom_styles/normal = SubResource( 7 )
+custom_fonts/font = SubResource( 8 )
+action_mode = 0
+text = "Options"
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button3" type="Button" parent="."]
+anchor_left = 0.104
+anchor_top = 0.463
+anchor_right = 0.365
+anchor_bottom = 0.556
+margin_left = 0.319992
+margin_top = -0.0400391
+margin_right = -0.800049
+margin_bottom = -0.480042
+custom_styles/hover = SubResource( 9 )
+custom_styles/pressed = SubResource( 10 )
+custom_styles/normal = SubResource( 11 )
+custom_fonts/font = SubResource( 13 )
+custom_colors/font_color_disabled = Color( 1, 1, 1, 1 )
+action_mode = 0
+text = "Quit"
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}

@@ -11,7 +11,14 @@ config_version=4
 [application]
 
 config/name="pousse_pousse_nain"
-run/main_scene="res://scenes/Scene_prototype.tscn"
+run/main_scene="res://scenes/menu.tscn"
+
+[display]
+
+window/size/width=1920
+window/size/height=1080
+window/size/resizable=false
+window/size/fullscreen=true
 
 [physics]
 
