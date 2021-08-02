@@ -1,8 +1,8 @@
 [gd_scene load_steps=18 format=2]
 
-[ext_resource path="res://scripts/Menu_Button1_script.gd" type="Script" id=1]
-[ext_resource path="res://scripts/Menu_Button3_script.gd" type="Script" id=2]
-[ext_resource path="res://scripts/Menu_Button2_script.gd" type="Script" id=3]
+[ext_resource path="res://scripts/menu/Menu_Button1_script.gd" type="Script" id=1]
+[ext_resource path="res://scripts/menu/Menu_Button3_script.gd" type="Script" id=2]
+[ext_resource path="res://scripts/menu/Menu_Button2_script.gd" type="Script" id=3]
 [ext_resource path="res://font/Berry Rotunda.ttf" type="DynamicFontData" id=4]
 
 [sub_resource type="StyleBoxFlat" id=1]

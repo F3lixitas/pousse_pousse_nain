@@ -3,6 +3,7 @@ extends Node2D
 #################################   Importation de codes source   #################################
 
 const triangleGenerator = preload("res://scripts/triangleGenerator_script.gd")
+const pointOperations = preload("res://scripts/pointOperations_script.gd")
 
 ##################################   Déclaration des variables   ##################################
 
@@ -20,6 +21,10 @@ var lineWidth = 2               # Définit la largeur des lignes entre les trian
 var Point = {
 	"tri": Array()              # Tableau des indices des triangles, permet de faciliter le changement de couleur
 }
+
+var selected = Array()
+
+var pionIndex = (maxX + 1) * maxY * 2 + 2 * maxX
 
 ##################################   Importation de ressources   ##################################
 
@@ -47,8 +52,31 @@ func _unhandled_input(event):
 	# Click gauche
 	
 	if event is InputEventMouseButton and event.is_pressed() and event.button_index == BUTTON_LEFT:
-		pass
-
+		var mp = get_viewport().get_mouse_position()
+		
+		var index = pointOperations.getPointIndex(maxX, maxY, stepX, stepY, padding, mp)
+		
+		get_child(points[index].tri[0]).material = selectedMaterial
+		get_child(points[index].tri[1]).material = selectedMaterial
+		get_child(points[index].tri[2]).material = selectedMaterial
+		get_child(points[index].tri[3]).material = selectedMaterial
+		get_child(points[index].tri[4]).material = selectedMaterial
+		get_child(points[index].tri[5]).material = selectedMaterial
+		
+		selected.append(index)
+		print(selected)
+		get_child(pionIndex).position = pointOperations.getPositionFromCursor(maxX, maxY, stepX, stepY, padding, mp)
+		
+	if event is InputEventMouseButton and event.is_pressed() and event.button_index == BUTTON_RIGHT:
+		#remise par défaut
+		for i in range(0, selected.size()):
+			get_child(points[selected[i]].tri[0]).material = defaultMaterial
+			get_child(points[selected[i]].tri[1]).material = defaultMaterial
+			get_child(points[selected[i]].tri[2]).material = defaultMaterial
+			get_child(points[selected[i]].tri[3]).material = defaultMaterial
+			get_child(points[selected[i]].tri[4]).material = defaultMaterial
+			get_child(points[selected[i]].tri[5]).material = defaultMaterial
+		selected.clear()
 
 # Fonction appelée lors du la création du noeud
 
