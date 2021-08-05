@@ -12,7 +12,11 @@ script = ExtResource( 4 )
 script = ExtResource( 3 )
 
 [node name="pion_1" type="Sprite" parent="pointGenerator"]
-position = Vector2( 100, 100 )
+position = Vector2( 612, 262 )
 scale = Vector2( 0.2, 0.2 )
 texture = ExtResource( 1 )
 script = ExtResource( 2 )
+
+[node name="Camera2D" type="Camera2D" parent="."]
+anchor_mode = 0
+current = true
