@@ -143,13 +143,17 @@ func _unhandled_input(event):
 		var mp = get_viewport().get_mouse_position()
 		
 		var index = pointOperations.getPointIndex(maxX, maxY, stepX, stepY, padding, mp)
-		var selectedPos = pointOperations.getPositionFromCursor(maxX, maxY, stepX, stepY, padding, mp)
 		
-		
-		var tab = deplacement.verfifAllDep(index, [0, 1, 1, 1, 0, 0], get_node("."))
+		var tab = deplacement.verfifAllDep(index, [1, 1, 1, 1, 1, 1], get_node("."))
 		
 		for cmp in range(0, tab.size()):
-			changeMaterial(tab[cmp], overlayedMaterial)
+			changeMaterial(tab[cmp], selectedMaterial)
+			selected.append(tab[cmp])
+			var p = Sprite.new()
+			p.texture = load("res://images/noeud.png")
+			p.position = pointOperations.getPointPosition(maxX, maxY, stepX, stepY, padding, tab[cmp])
+			p.scale = Vector2(0.1, 0.1)
+			add_child(p)
 		
 	if event is InputEventMouseButton and event.is_pressed() and event.button_index == BUTTON_RIGHT:
 		#remise par défaut

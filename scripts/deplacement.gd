@@ -29,7 +29,7 @@ static func verfifAllDep(posInit, dep, node):
 	#### Programme (a partir de l'étage 2) ######
 	for etageCourant in range(2, 10):
 		
-		print("ETAGE n", etageCourant)
+		#print("ETAGE n", etageCourant)
 		
 		#### Initialisation des tableaux chemins
 		cheminsBase = cheminsCourant.duplicate(true)
@@ -63,7 +63,7 @@ static func verfifAllDep(posInit, dep, node):
 		### Vérification des cases à l'étage courant pour chaque chemin ###
 		for j in range(0, cheminsCourant.size()):
 			if cheminsCourant[j].rang != 0 and etageCourant % cheminsCourant[j].rang == 0:
-				print(cheminsCourant[j])
+				#print(cheminsCourant[j])
 				
 				#On récup l'indice de la case en passant par tous les voisins depuis le point de départ
 				var indiceCourant = posInit
@@ -73,7 +73,7 @@ static func verfifAllDep(posInit, dep, node):
 							indiceCourant = node.points[indiceCourant].neighbour[dirCourant]
 							
 				indicesOK.append(indiceCourant)
-				print("indice : ", indiceCourant)			
+				#print("indice : ", indiceCourant)			
 	return indicesOK
 
 
