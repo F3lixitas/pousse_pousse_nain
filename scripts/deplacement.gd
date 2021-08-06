@@ -18,7 +18,7 @@ static func verfifAllDep(posInit, dep, node):
 	for i in range(0, 6):
 		var monChemin = Chemin.duplicate(true)
 		monChemin.dir[i] = 1
-		if dep[i] == 1:
+		if dep[i] == 1 and node.points[posInit].neighbour[i] >= 0:
 			#Pour les chemins de bases, il faudra aussi vérifier les colisions !!! Utilise si quelqu'un nous touche deirectement
 			monChemin.rang = 1
 			indicesOK.append(node.points[posInit].neighbour[i])
@@ -69,7 +69,7 @@ static func verfifAllDep(posInit, dep, node):
 				var indiceCourant = posInit
 				for dirCourant in range(0, 6):
 					for cmp in range(0, cheminsCourant[j].dir[dirCourant] * int(etageCourant/cheminsCourant[j].rang)):
-						if indiceCourant >= 0:
+						if indiceCourant >= 0 and node.points[indiceCourant].neighbour[dirCourant] >= 0:
 							indiceCourant = node.points[indiceCourant].neighbour[dirCourant]
 							
 				indicesOK.append(indiceCourant)

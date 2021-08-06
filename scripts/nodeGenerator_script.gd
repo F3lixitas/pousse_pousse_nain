@@ -41,7 +41,7 @@ var t = Timer
 var lastMaterials = [defaultMaterial, defaultMaterial, defaultMaterial, defaultMaterial, defaultMaterial, defaultMaterial]
 var overlayed = 0
 
-var pionIndex = (maxX + 1) * maxY * 2 + 2 * maxX + 1
+var pionIndex = (maxX + 1) * maxY * 2 + 2 * maxX
 
 
 
@@ -56,18 +56,6 @@ func changeMaterial(index, material):
 	get_child(points[index].tri[3]).material = material
 	get_child(points[index].tri[4]).material = material
 	get_child(points[index].tri[5]).material = material
-
-func casesAccessibles(n, origine):
-	if n == 0:
-		return
-	changeMaterial(origine, selectedMaterial)
-	selected.append(origine)
-	for i in range(0, 6):
-		var indice = points[origine].neighbour[i]
-		if (indice >= 0):# and (not selected.has(indice)):
-			t.start()
-			yield(t, "timeout")
-			casesAccessibles(n - 1, indice)
 
 
 func genererPoints():
@@ -198,9 +186,6 @@ func _process(delta):
 
 func _init():
 	genererPoints()
-	t = Timer.new()
-	t.set_wait_time(0.05)
-	t.set_one_shot(true)
 	
 	triangleGenerator.generateTriangles(maxX, maxY, stepX, stepY, padding, lineWidth, defaultMaterial, get_node("."))
 	points[931].occupation = 1
@@ -208,5 +193,4 @@ func _init():
 	points[764].occupation = 1
 	points[147].occupation = 1
 	points[632].occupation = 1
-	self.add_child(t)
 	redraw()
