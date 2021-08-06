@@ -73,7 +73,39 @@ static func verfifAllDep(posInit, dep, node):
 							indiceCourant = node.points[indiceCourant].neighbour[dirCourant]
 				
 				if pointOperations.checkValidity(indiceCourant, node) == false:
-					print(indiceCourant)
+					# la case est occupé, donc on suppr le chemin et tous les chemins autours qui n'ont pas de point à cet étage
+					
+					#Chemin courant
+					cheminsCourant[j].rang = 0
+					
+					#Chemin avant
+					var indiceTest = j
+					
+					while true:
+						if indiceTest - 1 >= 0:
+							indiceTest = indiceTest - 1
+						else:
+							indiceTest = cheminsCourant.size() - 1
+						
+						if cheminsCourant[indiceTest].rang == 0 or etageCourant % cheminsCourant[indiceTest].rang == 0:
+							break
+						else:
+							cheminsCourant[indiceTest].rang = 0
+							
+					#Chemin après
+					indiceTest = j
+					
+					while true:
+						if indiceTest + 1 < cheminsCourant.size():
+							indiceTest = indiceTest + 1
+						else:
+							indiceTest = 0
+						
+						if cheminsCourant[indiceTest].rang == 0 or etageCourant % cheminsCourant[indiceTest].rang == 0:
+							break
+						else:
+							cheminsCourant[indiceTest].rang = 0
+							
 				else:
 					indicesOK.append(indiceCourant)
 				#print("indice : ", indiceCourant)		
