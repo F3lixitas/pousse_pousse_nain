@@ -1,6 +1,6 @@
 extends Node
 
-
+const pointOperations = preload("res://scripts/pointOperations_script.gd")
 
 static func verfifAllDep(posInit, dep, node):
 	##### Variable #######
@@ -69,11 +69,16 @@ static func verfifAllDep(posInit, dep, node):
 				var indiceCourant = posInit
 				for dirCourant in range(0, 6):
 					for cmp in range(0, cheminsCourant[j].dir[dirCourant] * int(etageCourant/cheminsCourant[j].rang)):
-						if indiceCourant >= 0 and node.points[indiceCourant].neighbour[dirCourant] >= 0:
+						if indiceCourant >= 0 :
 							indiceCourant = node.points[indiceCourant].neighbour[dirCourant]
-							
-				indicesOK.append(indiceCourant)
-				#print("indice : ", indiceCourant)			
+				
+				if pointOperations.checkValidity(indiceCourant, node) == false:
+					print(indiceCourant)
+				else:
+					indicesOK.append(indiceCourant)
+				#print("indice : ", indiceCourant)		
+				
+				
 	return indicesOK
 
 

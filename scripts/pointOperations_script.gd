@@ -54,7 +54,7 @@ static func splitXY(maxX, maxY, index):
 
 
 static func checkValidity(index, node): # Modif à venir, rajouter un paramètre indiceOk qui est à -1 par default. Et la fonction ne prendra pas en compte quand occupation = indiceOk sur une case adj
-	if not node.points[index].occupation == 0:
+	if index <= 0 or not node.points[index].occupation == 0:
 		return false
 	for i in range(0, 6):
 		if not node.points[index].neighbour[i] < 0:
