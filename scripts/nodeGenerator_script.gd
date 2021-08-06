@@ -4,7 +4,7 @@ extends Node2D
 
 const triangleGenerator = preload("res://scripts/triangleGenerator_script.gd")
 const pointOperations = preload("res://scripts/pointOperations_script.gd")
-
+const deplacement = preload("res://scripts/deplacement.gd")
 
 ##################################   Importation de ressources   ##################################
 
@@ -145,9 +145,11 @@ func _unhandled_input(event):
 		var index = pointOperations.getPointIndex(maxX, maxY, stepX, stepY, padding, mp)
 		var selectedPos = pointOperations.getPositionFromCursor(maxX, maxY, stepX, stepY, padding, mp)
 		
-		if selectedPos == get_child(pionIndex).position:
-			casesAccessibles(50, index)
 		
+		var tab = deplacement.verfifAllDep(index, [0, 1, 1, 1, 0, 0], get_node("."))
+		
+		for cmp in range(0, tab.size()):
+			changeMaterial(tab[cmp], overlayedMaterial)
 		
 	if event is InputEventMouseButton and event.is_pressed() and event.button_index == BUTTON_RIGHT:
 		#remise par défaut
