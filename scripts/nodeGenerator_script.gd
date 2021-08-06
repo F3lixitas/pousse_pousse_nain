@@ -145,14 +145,20 @@ func _unhandled_input(event):
 		
 	if event is InputEventMouseButton and event.is_pressed() and event.button_index == BUTTON_RIGHT:
 		#remise par défaut
-		for i in range(0, selected.size()):
-			get_child(points[selected[i]].tri[0]).material = defaultMaterial
-			get_child(points[selected[i]].tri[1]).material = defaultMaterial
-			get_child(points[selected[i]].tri[2]).material = defaultMaterial
-			get_child(points[selected[i]].tri[3]).material = defaultMaterial
-			get_child(points[selected[i]].tri[4]).material = defaultMaterial
-			get_child(points[selected[i]].tri[5]).material = defaultMaterial
-		selected.clear()
+		var mp = get_viewport().get_mouse_position()
+		
+		var index = pointOperations.getPointIndex(maxX, maxY, stepX, stepY, padding, mp)
+		
+		points[index].occupation = 1
+		changeMaterial(index, overlayedMaterial)
+#		for i in range(0, selected.size()):
+#			get_child(points[selected[i]].tri[0]).material = defaultMaterial
+#			get_child(points[selected[i]].tri[1]).material = defaultMaterial
+#			get_child(points[selected[i]].tri[2]).material = defaultMaterial
+#			get_child(points[selected[i]].tri[3]).material = defaultMaterial
+#			get_child(points[selected[i]].tri[4]).material = defaultMaterial
+#			get_child(points[selected[i]].tri[5]).material = defaultMaterial
+#		selected.clear()
 
 # Fonction appelée lors du la création du noeud
 
