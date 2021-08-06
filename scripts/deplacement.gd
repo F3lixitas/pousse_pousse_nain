@@ -18,7 +18,7 @@ static func verfifAllDep(posInit, dep, node):
 	for i in range(0, 6):
 		var monChemin = Chemin.duplicate(true)
 		monChemin.dir[i] = 1
-		if dep[i] == 1 and node.points[posInit].neighbour[i] >= 0:
+		if dep[i] == 1 and pointOperations.checkValidity(node.points[posInit].neighbour[i], node):
 			#Pour les chemins de bases, il faudra aussi vérifier les colisions !!! Utilise si quelqu'un nous touche deirectement
 			monChemin.rang = 1
 			indicesOK.append(node.points[posInit].neighbour[i])
