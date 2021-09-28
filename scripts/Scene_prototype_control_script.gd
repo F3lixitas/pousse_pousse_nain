@@ -4,8 +4,8 @@ var menuActive = false
 var menu = load("res://scenes/submenu.tscn")
 var inst = menu.instance()
 
-func _unhandled_key_input(event):
-	if event is InputEventKey and event.is_pressed() and event.scancode == KEY_ESCAPE:
+func _input(event):
+	if Input.is_action_just_pressed("open_menu"):
 		if not menuActive:
 			add_child(inst)
 			menuActive = true

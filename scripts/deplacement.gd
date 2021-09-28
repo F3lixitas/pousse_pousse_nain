@@ -37,7 +37,7 @@ static func verfifAllDep(posInit, dep, node):
 		cheminsCourant.push_back(monChemin)
 		
 	#### Programme (a partir de l'étage 2) ######
-	for etageCourant in range(2, 20):
+	for etageCourant in range(2, 50):
 		
 		#print("ETAGE n", etageCourant)
 		

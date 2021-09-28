@@ -33,7 +33,6 @@ static func getPointPosition(maxX, maxY, stepX, stepY, padding, index):
 	var vec = splitXY(maxX, maxY, index)
 	
 	var out = Vector2(padding + vec.x * stepX + (int(vec.y) % 2) * (stepX / 2), padding + vec.y * stepY)
-	
 	return out
 
 

@@ -43,7 +43,9 @@ var overlayed = 0
 
 var pionIndex = (maxX + 1) * maxY * 2 + 2 * maxX
 
-
+var normalState = true
+var movingState = false
+var pushingState = false
 
 ##########################################   Fonctions   ##########################################
 
@@ -128,20 +130,49 @@ func _unhandled_input(event):
 	# Click gauche
 	
 	if event is InputEventMouseButton and event.is_pressed() and event.button_index == BUTTON_LEFT:
-		var mp = get_viewport().get_mouse_position()
+		if normalState:
+			var mp = get_viewport().get_mouse_position()
+			var index = pointOperations.getPointIndex(maxX, maxY, stepX, stepY, padding, mp)
+			
+			if index == pointOperations.getPointIndex(maxX, maxY, stepX, stepY, padding, get_child(pionIndex).position):
+				var tab = deplacement.verfifAllDep(index, [1, 1, 1, 1, 1, 1], get_node("."))
+				for cmp in range(0, tab.size()):
+					var dist = pointOperations.getPointPosition(maxX, maxY, stepX, stepY, padding, tab[cmp]).distance_to(pointOperations.getPointPosition(maxX, maxY, stepX, stepY, padding, index))
+
+					if dist < 500:
+						changeMaterial(tab[cmp], selectedMaterial)
+						selected.append(tab[cmp])
+				
+				normalState = false
+				movingState = true
+		elif movingState:
+			var mp = get_viewport().get_mouse_position()
+			var index = pointOperations.getPointIndex(maxX, maxY, stepX, stepY, padding, mp)
+			if selected.has(index):
+				for i in range(selected.size()):
+					changeMaterial(selected[i], defaultMaterial)
+				selected.clear()
+				lastMaterials[0] = defaultMaterial
+				lastMaterials[1] = defaultMaterial
+				lastMaterials[2] = defaultMaterial
+				lastMaterials[3] = defaultMaterial
+				lastMaterials[4] = defaultMaterial
+				lastMaterials[5] = defaultMaterial
+				
+				get_child(pionIndex).position = pointOperations.getPointPosition(maxX, maxY, stepX, stepY, padding, index)
+			else:
+				for i in range(selected.size()):
+					changeMaterial(selected[i], defaultMaterial)
+				selected.clear()
+			
+			movingState = false
+			normalState = true
+
+		elif pushingState:
+			pass
+		else:
+			normalState = true
 		
-		var index = pointOperations.getPointIndex(maxX, maxY, stepX, stepY, padding, mp)
-		
-		var tab = deplacement.verfifAllDep(index, [1, 1, 1, 1, 1, 1], get_node("."))
-		
-		for cmp in range(0, tab.size()):
-			changeMaterial(tab[cmp], selectedMaterial)
-			selected.append(tab[cmp])
-			var p = Sprite.new()
-			p.texture = load("res://images/noeud.png")
-			p.position = pointOperations.getPointPosition(maxX, maxY, stepX, stepY, padding, tab[cmp])
-			p.scale = Vector2(0.1, 0.1)
-			add_child(p)
 		
 	if event is InputEventMouseButton and event.is_pressed() and event.button_index == BUTTON_RIGHT:
 		#remise par défaut
@@ -150,15 +181,12 @@ func _unhandled_input(event):
 		var index = pointOperations.getPointIndex(maxX, maxY, stepX, stepY, padding, mp)
 		
 		points[index].occupation = 1
-		changeMaterial(index, overlayedMaterial)
-#		for i in range(0, selected.size()):
-#			get_child(points[selected[i]].tri[0]).material = defaultMaterial
-#			get_child(points[selected[i]].tri[1]).material = defaultMaterial
-#			get_child(points[selected[i]].tri[2]).material = defaultMaterial
-#			get_child(points[selected[i]].tri[3]).material = defaultMaterial
-#			get_child(points[selected[i]].tri[4]).material = defaultMaterial
-#			get_child(points[selected[i]].tri[5]).material = defaultMaterial
-#		selected.clear()
+		lastMaterials[0] = occupiedMaterial
+		lastMaterials[1] = occupiedMaterial
+		lastMaterials[2] = occupiedMaterial
+		lastMaterials[3] = occupiedMaterial
+		lastMaterials[4] = occupiedMaterial
+		lastMaterials[5] = occupiedMaterial
 
 # Fonction appelée lors du la création du noeud
 
